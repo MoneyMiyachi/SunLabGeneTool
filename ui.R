@@ -5,6 +5,7 @@ library(DT)
 library(xtable)
 library(markdown)
 library(corrplot)
+
 data <- read.csv("Almost_Complete_db.csv", stringsAsFactors = F)
 data$X <- NULL
 

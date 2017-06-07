@@ -5,6 +5,7 @@ library(shinydashboard)
 library(htmlwidgets)
 library(DT)
 library(xtable)
+library(markdown)
 
 function(input, output) {
   
