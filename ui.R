@@ -9,7 +9,7 @@ library(corrplot)
 data <- read.csv("Almost_Complete_db.csv", stringsAsFactors = F)
 data$X <- NULL
 
-fluidPage(theme = "bootstrap.css",
+fluidPage(
   titlePanel("Sun Lab Gene Correlation Tool"),
   sidebarLayout(
     sidebarPanel(
