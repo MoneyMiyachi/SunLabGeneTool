@@ -4,6 +4,8 @@ library(htmlwidgets)
 library(DT)
 library(xtable)
 
+data <- read.csv("Almost_Complete_db.csv", stringsAsFactors = F)
+data$X <- NULL
 
 fluidPage(theme = "bootstrap.css",
   titlePanel("Sun Lab Gene Correlation Tool"),
@@ -32,36 +34,36 @@ fluidPage(theme = "bootstrap.css",
       tabsetPanel(
         tabPanel("Add Gene/Experiment",
                  h4("Users Uploaded Table"),
-                 tableOutput("contents")
+                 #tableOutput("contents")
+                 DT::dataTableOutput("contents")
         ),
         tabPanel("Working Database",
                  h4("Current Working Database"),
                 fluidRow(dataTableOutput('foo'))
         ),
         tabPanel("Pearson Correlation Coefficient",
-                 h4("Pearsons Correlation Coefficient Plot")),
-        plotOutput('x')
+                 h4("Pearsons Correlation Coefficient Plot"),
+        plotOutput('x'))
       )
     )
   ),
   fluidRow(
     column(3,
-           h4("Diamonds Explorer"),
-           sliderInput('sampleSize', 'Sample Size', 
+           h4("Correlation Explorer"),
+           sliderInput('corrthresh', 'Correlation Threshold', 
                        min=1, max=nrow(data), value=min(1000, nrow(data)), 
                        step=500, round=0),
            br(),
-           checkboxInput('jitter', 'Jitter'),
-           checkboxInput('smooth', 'Smooth')
+           checkboxInput('downfold', 'Downfold'),
+           checkboxInput('upfold', 'Upfold')
     ),
-    column(4, offset = 1,
-           selectInput('x', 'X', names(data)),
-           selectInput('y', 'Y', names(data), names(data)[[2]]),
+    column(4, h4("Choose Gene"), offset = 1,
+           selectInput('gene1', 'Gene 1', names(data)),
+           selectInput('gene2', 'Gene 2', names(data), names(data)[[2]]),
            selectInput('color', 'Color', c('None', names(data)))
     ),
-    column(4,
-           selectInput('facet_row', 'Facet Row', c(None='.', names(data))),
-           selectInput('facet_col', 'Facet Column', c(None='.', names(data)))
+    column(4,h4("Supplemental Information"), 
+           includeMarkdown("supplemental.md")
     )
   )
 )
