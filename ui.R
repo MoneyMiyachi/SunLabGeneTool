@@ -5,6 +5,7 @@ library(DT)
 library(xtable)
 library(markdown)
 library(corrplot)
+library(rdrop2)
 
 data <- read.csv("Almost_Complete_db.csv", stringsAsFactors = F)
 data$X <- NULL
@@ -28,7 +29,9 @@ fluidPage(
                    c(None='',
                      'Double Quote'='"',
                      'Single Quote'="'"),
-                   '"')
+                   '"'),
+      actionButton("Load", label = "Analyze"),
+      actionButton("add", label = "Add to Database")
     ),
     
     
@@ -37,15 +40,19 @@ fluidPage(
         tabPanel("Add Gene/Experiment",
                  h4("Users Uploaded Table"),
                  #tableOutput("contents")
-                 DT::dataTableOutput("contents")
+                 DT::dataTableOutput("isolated")
         ),
+        tabPanel("Pearson Correlation Rankings",
+                 h4("Highest Correlated Genes"),
+                 DT::dataTableOutput("ranking")
+        ),
+        tabPanel("Correlation Plots",
+                 h4("Pearsons Correlation Coefficient Plot"),
+        plotOutput('trial')),
         tabPanel("Working Database",
                  h4("Current Working Database"),
-                fluidRow(dataTableOutput('foo'))
-        ),
-        tabPanel("Pearson Correlation Coefficient",
-                 h4("Pearsons Correlation Coefficient Plot"),
-        plotOutput('x'))
+                 fluidRow(dataTableOutput('idk'))
+        )
       )
     )
   ),
@@ -59,10 +66,10 @@ fluidPage(
            checkboxInput('downfold', 'Downfold'),
            checkboxInput('upfold', 'Upfold')
     ),
-    column(4, h4("Choose Gene"), offset = 1,
+    column(4, h4("Single Gene Comparison"), offset = 1,
            selectInput('gene1', 'Gene 1', names(data)),
            selectInput('gene2', 'Gene 2', names(data), names(data)[[2]]),
-           selectInput('color', 'Color', c('None', names(data)))
+           selectInput('thresh', 'Treshhold', c('None', names(data)))
     ),
     column(4,h4("Supplemental Information"), 
            includeMarkdown("supplemental.md")
