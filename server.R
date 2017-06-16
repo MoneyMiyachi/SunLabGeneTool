@@ -9,6 +9,7 @@ library(markdown)
 library(rdrop2)
 library(DT)
 library(corrplot)
+library(shinyBS)
 token <- drop_auth()
 saveRDS(token, "droptoken.rds")
 token <- readRDS("droptoken.rds")
@@ -22,7 +23,19 @@ token <- readRDS("droptoken.rds")
 # read it back with readRDS
 # Then pass the token to each drop_ function
 drop_acc(dtoken = token)
-function(input, output) {
+
+
+function(input, output, session) {
+  
+  output$genericPlot <- renderPlot(plot(rnorm(100)))
+  observeEvent(input$p1Button, ({
+    updateCollapse(session, "collapseExample", open = "Panel 1")
+  }))
+  observeEvent(input$styleSelect, ({
+    updateCollapse(session, "collapseExample", style = list("Panel 1" = input$styleSelect))
+  }))
+  
+  output$value <- renderText({ input$caption })
   
   data1 <- reactive({
     if(input$Load == 0){return()}
@@ -95,8 +108,18 @@ function(input, output) {
       clean_db <- merged[, sapply(merged, is.numeric)]
       clean_db$X <- NULL
       Pearsons <- cor(clean_db, use="pairwise.complete.obs")
+      
+      x <- data.frame(Pearsons)
+      new <- x[ncol(x),]
+      new <- new[-length(new)]
+      new <- new[order(new, decreasing = T)]
+      new <- t(new)
+      new <- head(new, n = 10)
+      gene_select <- row.names(new)
+      pleasework <- clean_db[,gene_select]
+      newPearsons <- cor(pleasework, use="pairwise.complete.obs")
     })
-    Pearsons
+    newPearsons
   })
   output$trial = renderPlot({corrplot.mixed(pearson(), addrect=2, col=col5(20), tl.pos = "lt", diag = "u")})
   
@@ -123,11 +146,21 @@ function(input, output) {
       x <- data.frame(Pearsons)
       new <- x[ncol(x),]
       new <- new[-length(new)]
-      new <- new[order(abs(new), decreasing = T)]
+      new <- new[order(new, decreasing = T)]
       new <- t(new)
+      colnames(new) <- "Pearson Correlation Coefficient"
     })
     new
   })
+  
+  
+  
+  
+  
+  
+  output$top_10 <- renderDataTable({data.frame(head(hope(), n = 10))},options = list( 
+    scrollY = '300px', paging = FALSE, scrollX = TRUE
+  ))
   
   
   output$ranking = renderDataTable({hope()},options = list( 
