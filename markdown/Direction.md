@@ -13,3 +13,17 @@ This Tool is designed to offer correlation insight between the set of known CRIS
 you like to be analyzed be displayed in the Rankings and Plot Tabs on the right of the page.
 
 4. To submit your gene to be added to the database press the "Add Gene" Button at the bottom of the data input section.
+
+<br/>
+
+### Contributing to Database:
+
+- If you would like to add you own pertubation data to HGKP-Db please email kmiyachi@ucsd.edu with the following information:
+  1. Link to Publication
+  2. The Gene affected by perturbation
+  3. Knockdown or Overexpression
+  4. First Author(s)
+  5. Publishing Journal
+  6. Data Type
+  7. Accession Code of Dataset
+  8. Notes (Optional)

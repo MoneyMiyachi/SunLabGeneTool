@@ -1,3 +1,5 @@
+@import url('//fonts.googleapis.com/css?family=Open+Sans:400,700|Space+Mono:100,300i');
+
 #placeholder1, #placeholder2 {
     min-height: 20px;
     padding: 19px;
@@ -13,3 +15,17 @@
     padding: 50px;
     border: #ddd 8px solid;
 }
+
+
+#suninfo {
+
+        font-family: 'Space Mono', bold;
+        font-weight: 800;
+        line-height: 1.9;
+        color: black;
+        margin: auto;
+        text-align: center;
+        width: 50%;
+        }
+        
+        "))

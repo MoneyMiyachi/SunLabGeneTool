@@ -4,7 +4,7 @@
 #
 
 my_packages = c("shiny", "shinydashboard", "htmlwidgets","DT","xtable","markdown", "corrplot", 
-                "rdrop2", "Cairo", "shinyBS", "rmarkdown", "rsconnect", "RMySQL")
+                "rdrop2", "Cairo", "shinyBS", "rmarkdown", "rsconnect", "RMySQL", "RODBC")
 
 install_if_missing = function(p) {
   if (p %in% rownames(installed.packages()) == FALSE) {
