@@ -5,14 +5,14 @@ This Tool is designed to offer correlation insight between the set of known CRIS
 
 ### Directions:
 
-1. Input a file or copy and paste deliminated results with the first column being the labeled GeneName and the second column the name of the experimental gene.
+1. Select the type of input and either upload a file or copy and paste deliminated results with the first column header labeled Gene and the second column header labeled with the name of the experimental gene.
 
 2. To check the input press the Load Input File or Load Text Input buttons below each of respective input fields. **The input must have header titles: Gene, [Name of Over/Under Expresed Gene]**
 
 3. To analyze the correlation of your sample data compared to our database, Press the Correlation Analysis button under the data field that
 you like to be analyzed be displayed in the Rankings and Plot Tabs on the right of the page.
 
-4. To submit your gene to be added to the database press the "Add Gene" Button at the bottom of the data input section.
+4. An example file, and example text input have been provided to guide users on the input The HKGP-DB Tool properly accepts. 
 
 <br/>
 

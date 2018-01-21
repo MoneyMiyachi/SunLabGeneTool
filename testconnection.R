@@ -25,15 +25,13 @@ album = dbGetQuery(con,statement="select * from iris")
 print(album)
 
 
-dbSendQuery(con, "LOAD DATA LOCAL INFILE '/Users/kenmiyachi/Research/database/SunLabGeneTool/newFull.csv'
-            INTO TABLE Fulltable
-            FIELDS TERMINATED BY ','
-            LINES TERMINATED BY '\n'
-            IGNORE 1 LINES")
-
 
 
 x <- colnames(album)
+
+
+link_dict<- setNames(as.list(names$link), names$names)
+
 
 killDbConnections <- function () {
   
@@ -47,3 +45,4 @@ killDbConnections <- function () {
   print(paste(length(all_cons), " connections killed."))
   
 }
+

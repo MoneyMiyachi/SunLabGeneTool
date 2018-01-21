@@ -5,17 +5,12 @@ library(DT)
 library(xtable)
 library(markdown)
 library(corrplot)
-library(rdrop2)
 library(shinyBS)
 library(rmarkdown)
+library(shinycssloaders)
 
 
-data <- read.csv("Almost_Complete_db.csv", stringsAsFactors = F)
-data$X <- NULL
 corner_element = HTML(paste0('<a href=',shQuote(paste0("https://www.kenmiyachi.com/")), '>', 'Foo', '</a>'))
-
-new <- mtcars
-
 
 
 fluidPage(
@@ -24,27 +19,31 @@ fluidPage(
   tags$head(tags$link(rel="stylesheet", 
                       type="text/css",
                       href="style.css")),
+  
+  tags$style(type="text/css",
+             ".shiny-output-error { visibility: hidden !important; }",
+             ".shiny-output-error:before { visibility: hidden !important; }"
+  ),
   tags$head(
     tags$style(HTML("
-                    @import url('//fonts.googleapis.com/css?family=Open+Sans:400,700|Space+Mono:400,700i');
+                    @import url('//fonts.googleapis.com/css?family=Open+Sans:400,700|Lara:400,700i');
                     
                     h2 {
-                    font-family: 'Space Mono', bold;
+                    font-family: 'Lara', bold;
                     font-weight: 800;
                     line-height: 1.9;
-                    color: black;
+                    color: rgb(24,43,100);
                     margin: auto;
                     text-align: center;
-                    width: 50%;
-                    font-size: 29px;
+                    width: 90%;
+                    font-size: 35px;
                     }
 
                     #suninfo {
-                    font-family: 'Space Mono', bold;
+                    font-family: 'Open Sans', bold;
                     font-weight: 800;
                     line-height: 1.9;
                     color: black;
-              
                     }
 
                     ol {
@@ -57,25 +56,26 @@ fluidPage(
              ".shiny-output-error { visibility: hidden; }",
              ".shiny-output-error:before { visibility: hidden; }"
   ),
-  imageOutput("preImage", height = 60),
-  titlePanel("Human Genome Keratinocyte Perturbation Database (HGKP-Db)"),
+  fluidRow(id = 'suninfo', column(width = 2, imageOutput("jacobsImage", height = 60)), column(width=1,offset=9, imageOutput("medImage", height = 60))),
+  titlePanel("Human Keratinocyte Genome Perturbation Database (HKGP-Db)"),
   tags$head(tags$style(
     type="text/css",
-    "#image preImage {max-width: 100%; width: 100%; height: auto}"
+    "#image jacobsImage {max-width: 100%; width: 100%; height: auto;}"
   )),
   fluidRow(id = "suninfo", column(width = 4, helpText(   a("Journal: HGKP-Db Tool", href="https://www.bryansunlab.com/", target="_blank">"https://www.bryansunlab.com/"))),
-           column(width = 4, offset = 4, helpText(   a("Sun Laboratory: University of California, San Diego", href="https://www.bryansunlab.com/", target="_blank">"https://www.bryansunlab.com/")))),
+           column(width = 3, offset = 5, helpText(   a("Bryan Sun Laboratory: UCSD Dermatology", href="https://www.bryansunlab.com/", target="_blank">"https://www.bryansunlab.com/")))),
   bsCollapse(id = "collapseExample",
              bsCollapsePanel("Directions",
-                             includeMarkdown("./markdown/Direction.md"), style = "success")
+                             includeMarkdown("./Direction.md"), style = "success")
   ),
   #Sidebar stuff
   sidebarLayout(
     sidebarPanel(
       #fluidRow(column(width = 4, checkboxInput("file", "File Upload")),column(width = 4, checkboxInput("input", "Text Input"))),
-      radioButtons("i_type", "Input Type:",
-                   c("File Upload" = "fup",
-                     "Text Input" = "txt")),
+      fluidRow(column(width = 4, radioButtons("i_type", "Input Type:",
+                                              c("File Upload" = "fup",
+                                                "Text Input" = "txt"))))
+      ,
       conditionalPanel(condition = "input.i_type == 'fup'",
       fileInput('inputFile', 'Upload Files',
                 accept=c('text/csv', 
@@ -98,6 +98,8 @@ KRT1, 0.711"),
       actionButton("Corr", label = "Correlation Analysis", class="btn-primary"),
       actionButton("Example", label = "Example Input", class="btn-secondary")
       ),
+      tags$hr(),
+      actionButton("clear", label = "Clear Input/Output", class="btn-danger"),
       tags$hr(),
       bsCollapse(id = "collapseExample",
                  bsCollapsePanel("Input Options",
@@ -128,61 +130,44 @@ KRT1, 0.711"),
         ),
         tabPanel("Pearson Correlation Rankings",
                  h4("Highest Pearson Correlated Genes"),
-                 DT::dataTableOutput("topPearson"),
+                 conditionalPanel(condition="input.i_type == 'fup'",
+                 DT::dataTableOutput("topPearson") %>% withSpinner(color="#0dc5c1")),
                  #h4("Highest Spearman Corrleated Genes"),
-                 #DT::dataTableOutput("topSpearman"),
-                 DT::dataTableOutput("txttop_10")
+                 #DT::dataTableOutput(""),
+                 conditionalPanel(condition="input.i_type == 'txt'",
+                 DT::dataTableOutput("txttopPearson") %>% withSpinner(color="#0dc5c1"))
         ),
-        tabPanel("Correlation Plots",
+        tabPanel("Pearson Correlation Visualizations",
                  h4("Pearsons Correlation Coefficient Plot"),
-                 conditionalPanel(condition="input.file1 != NULL",
-                 plotOutput('trial')),
-                 conditionalPanel(condition="input.corr != 0",
-                 plotOutput('pearsonVis'))
+                 conditionalPanel(condition="input.i_type == 'fup'",
+                 #plotOutput('barPearson') %>% withSpinner(color="#0dc5c1"),
+                 plotOutput('barPearson') %>% withSpinner(color="#0dc5c1")),
+                 conditionalPanel(condition="input.i_type == 'txt'",
+                 plotOutput('txtvis') %>% withSpinner(color="#0dc5c1"))
         ),
         tabPanel("Working Database",
                  h4("Current Working Database"),
-                 fluidRow(dataTableOutput('fullDb'))
-        ),
-        
-        tabPanel("Data Information",
-                 h4("Publication Data Information"),
-                 DT::dataTableOutput("table1")
+                 fluidRow(dataTableOutput('fullDb') %>% withSpinner(color="#0dc5c1"))
         )
       )
     )
   ),
   #Extra Stuff that is completley arbritrary and irrelevant right now 
   bsCollapse(id = "main_collapse",
-             bsCollapsePanel("Advanced Correlation Options",   fluidRow(
-               column(3,
-                      h4("Correlation Explorer"),
-                      sliderInput('corrthresh', 'Correlation Threshold', 
-                                  min=0, max=1, value=0.3, 
-                                  step=0.01, round=0.001),
-                      br(),
-                      checkboxInput('downfold', 'Downfold'),
-                      checkboxInput('upfold', 'Upfold'),
-                      checkboxInput('absolute','Absolute Value')
-               ),
-               column(4, h4("Single Gene Comparison"), offset = 1,
-                      selectInput('gene1', 'Gene 1', names(data)),
-                      selectInput('gene2', 'Gene 2', names(data), names(data)[[2]]),
-                      actionButton("Compare", label = "Compare Genes", class="btn-success")
-               ),
-               column(4,h4("Correlation Information"),
+             bsCollapsePanel("Supporting Documentation",   fluidRow(
+               column(4,
+                      h4("Sun Lab Information"),
                       tags$ul(
-                        tags$li(tags$a(href="www.rstudio.com", "Pearson Correlation Coefficient")),
-                        tags$li(tags$a(href="www.rstudio.com", "Spearman Correlation")),
-                        tags$li(tags$a(href="www.rstudio.com", "Kendall Correlation")),
-                        tags$li(tags$a(href="www.rstudio.com", "Vector/Matrix Calculus")),
-                        tags$li(tags$a(href="www.rstudio.com", "Normalization"))
-                      ),
-                      h4("Sun Laboratory Information"),
+                        tags$li(tags$a(href="https://www.ncbi.nlm.nih.gov/pubmed/29183730", "PSMD8 Publication")),
+                        tags$li(tags$a(href="https://www.bryansunlab.com/publications", "Sun Lab Publications")),
+                        tags$li(tags$a(href="https://www.bryansunlab.com/contact", "Contact"))
+                      )
+               ),
+               column(4, h4("Correlation Information"),
                       tags$ul(
-                        tags$li(tags$a(href="www.rstudio.com", "PSMD8 Publication")),
-                        tags$li(tags$a(href="www.rstudio.com", "Publications")),
-                        tags$li(tags$a(href="www.rstudio.com", "Contact"))
+                        tags$li(tags$a(href="http://onlinestatbook.com/2/describing_bivariate_data/pearson.html", "Pearson Correlation Coefficient")),
+                        tags$li(tags$a(href="https://en.wikipedia.org/wiki/Matrix_calculus", "Vector/Matrix Calculus")),
+                        tags$li(tags$a(href="https://academic.oup.com/bioinformatics/article/28/20/2584/203544#2091068", "Normalization Techniques"))
                       )
                )
              ), style = "info")
