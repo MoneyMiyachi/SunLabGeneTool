@@ -1,4 +1,14 @@
-# SunLabGeneTool
+# Human Keratinocyte Gene Perturbation Database Tool
 
-- Pull the Project and Open in R Studio
-- Navigate to Either server.R or ui.R and Press 'Run App'
+#### R Modules
+- shiny
+- shinydashboard
+- htmlwidgets
+- DT
+- xtable
+- markdown
+- corrplot
+- shinyBS
+- rsconnect
+- RMySQL
+- RODBC
