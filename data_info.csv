@@ -1,35 +1,0 @@
-DOI,Gene,Perturbation,First Author,Journal,Data Type,Accession Code,Notes
-doi:10.1038/nature11661,TINCR,Knockdown,Kretz M,Nature,RNA,SRP010678,
-10.1038/nature08683,DNMT1,Knockdown,Sen G,Nature,Microarray,GSE18590,
-http://dx.doi.org/10.1016/j.devcel.2015.01.028,MAF/MAFB,Knockdown,Lopez-Pajares V,Dev Cell,Microarray,GSE52954,
-http://dx.doi.org/10.1371/journal.pgen.1002829,GRHL3,Knockdown,Hopkin,PLoS Genetics,Microarray,"GSE37049,",
-http://dx.doi.org/10.1371/journal.pgen.1002829,MLL2,Knockdown,Hopkin,PLoS Genetics,Microarray,GSE37570,
-10.1016/j.stem.2012.12.014,ACTL6A,Knockdown,Bao,Cell Stem Cell,Microarray,GSE36222,
-10.1016/j.devcel.2011.12.001,ZNF750,Knockdown,Sen,Dev Cell,Microarray,GSE32685,
-10.1016/j.devcel.2011.12.001,KLF4,Knockdown,Sen,Dev Cell,Microarray,GSE32685,
-10.1101/gad.1463206,P63,Knockdown,Truong,Genes Dev,Microarray,GSE68872,raw data not available; table only
-10.1101/gad.1463206,P63,Overexpression,Truong,Genes Dev,Microarray,N/A,raw data not available; table only
-10.1101/gad.1673508,JMJD3,Knockdown,Sen,Genes Dev,Microarray,N/A,no microarray done
-10.1101/gad.1484707,P53,Knockdown,Nguyen,Genes Dev,,N/A,
-10.1101/gad.1406006,NOTCH1,Overexpession,Nguyen,Genes Dev,,N/A,
-http://dx.doi.org/10.1016/j.devcel.2015.10.023,MPZL3,Knockdown,Bhaduri,Dev Cell,RNA-Seq,PRJNA285272,
-http://dx.doi.org/10.1016/j.devcel.2015.10.023,FDXR,Knockdown,Bhaduri,Dev Cell,RNA-Seq,PRJNA285272,
-10.1002/stem.1809,SNAI2,Knockdown,Mistry,Stem Cells,Microarray,GSE55269,
-10.1002/stem.1809,SNAI2,Overexpression,Mistry,Stem Cells,Microarray,GSE55269,
-10.1186/s13059-015-0840-9,BAF,Knockdown,Bao,Genome Biology,RNA-Seq,GSE67382,"use only GSM1921004        GSM1921005GSM1921006        GSM1921007"
-10.1101/gad.267708.115,CALML5,Knockdown,Sun,Genes Dev,RNA-Seq,,I will just give you the table
-10.1101/gad.267708.115,SFN,Knockdown,Sun,Genes Dev,RNA-Seq,,I will just give you the table
-doi.org/10.1016/j.stem.2011.07.013,CBX4,Overexpression,Luis,Cell Stem Cell,Microarray,,Table in dropbox
-doi.org/10.1016/j.stem.2011.07.013,CBX4,Knockdown,Luis,Cell Stem Cell,Microarray,,Table in dropbox
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,Completed,,,,,,
-,No Data,,,,,,
-,Proccessing,,,,,,
